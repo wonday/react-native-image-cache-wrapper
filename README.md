@@ -68,6 +68,7 @@ render()
 ### Static Function
 
 **CachedImage.getSize(url, (width,height)=>void)**
+
 Get the image size, if no cache, will cache it.
 
 Example:
@@ -80,6 +81,7 @@ CachedImage.getSize("https://assets-cdn.github.com/images/modules/logos_page/Oct
 ```
 
 **CachedImage.prefetch(url,expiration=0,complete=(cachFile)=>void,fail=(error)=>void)**
+
 prefetch an image and cache it.
 
 Example:
@@ -96,6 +98,7 @@ CachedImage.prefetch("https://assets-cdn.github.com/images/modules/logos_page/Oc
 ```
 
 **CachedImage.deleteCache(url)**
+
 delete a cache file.
 
 Example:
@@ -107,6 +110,7 @@ CachedImage.deleteCache("https://assets-cdn.github.com/images/modules/logos_page
 ```
 
 **CachedImage.clearCache()**
+
 clear all cache.
 
 Example:
