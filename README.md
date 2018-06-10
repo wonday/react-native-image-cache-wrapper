@@ -67,7 +67,7 @@ render()
 
 ### Static Function
 
-**CachedImage.getSize(url, (width,height)=>void)**
+**CachedImage.getSize(url, success=(width,height)=>void,fail=(error)=>void)**
 
 Get the image size, if no cache, will cache it.
 
@@ -75,8 +75,11 @@ Example:
 ```
 import CachedImage from 'react-native-image-cache-wrapper';
 
-CachedImage.getSize("https://assets-cdn.github.com/images/modules/logos_page/Octocat.png", (width,height)=>{
-    console.log("width:"+width+" height:"+height);
+CachedImage.getSize("https://assets-cdn.github.com/images/modules/logos_page/Octocat.png", 
+    (width,height)=>{
+        console.log("width:"+width+" height:"+height);
+    },(error)=>{
+        console.log("error:"+error);
     });
 ```
 
