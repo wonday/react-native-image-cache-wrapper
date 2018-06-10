@@ -1,0 +1,36 @@
+{
+    "name": "react-native-image-cache-wrapper",
+    "version": "3.0.16",
+    "description": "The best react native image cache wrapper.",
+    "main": "index.js",
+    "typings": "./index.d.ts",
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/wonday/react-native-image-cache-wrapper.git"
+    },
+    "keywords": [
+        "Cache",
+        "Cached Image",
+        "Image Cache",
+        "Image",
+        "ImageBackground",
+        "react-component",
+        "react-native",
+        "android",
+        "ios"
+    ],
+    "author": {
+        "name": "Wonday",
+        "url": "https://github.com/wonday"
+    },
+    "license": "MIT",
+    "bugs": {
+        "url": "https://github.com/wonday/react-native-image-cache-wrapper/issues"
+    },
+    "dependencies": {
+        "crypto-js": "^3.1.9-1",
+    },
+    "peerDependencies": {
+        "react-native-fetch-blob": "^0.10.8"
+    }
+}
