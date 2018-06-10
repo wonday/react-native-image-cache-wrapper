@@ -42,8 +42,8 @@ v1.0.0
 | Property      | Type          | Default          | Description         | FirstRelease |
 | ------------- |:-------------:|:----------------:| ------------------- | ------------ |
 | ```<Image/>``` or ```<ImageBackground>``` properties        |         |     | same with ```<Image/>``` and ```<ImageBackground/>``` | 1.0 |
-| expiration    | number        | 0                | expiration seconds (0:no expiration)          | 1.0 |
-| activityIndicator   | Component       | null | when loading show it as an indicator, you can use your component| 1.0 |
+| expiration    | number        | 604800           | expiration seconds (0:no expiration, default cache a week) | 1.0 |
+| activityIndicator | Component | null | when loading show it as an indicator, you can use your component| 1.0 |
 
 
 ### Usage
