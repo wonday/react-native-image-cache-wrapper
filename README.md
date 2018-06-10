@@ -80,7 +80,7 @@ CachedImage.getSize("https://assets-cdn.github.com/images/modules/logos_page/Oct
     });
 ```
 
-**CachedImage.prefetch(url,expiration=0,complete=(cachFile)=>void,fail=(error)=>void)**
+**CachedImage.prefetch(url,expiration=0,success=(cachFile)=>void,fail=(error)=>void)**
 
 prefetch an image and cache it.
 
