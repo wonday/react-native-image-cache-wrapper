@@ -31,7 +31,7 @@ yarn add rn-fetch-blob
 
 ### ChangeLog
 
-v1.0.1
+v1.0.2
 
 1. use rn-fetch-blob instead of react-native-fetch-blob
 
