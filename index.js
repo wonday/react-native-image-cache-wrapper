@@ -34,13 +34,13 @@ export default class CachedImage extends Component {
      */
     static deleteCache = url => {
         const cacheFile = _getCacheFilename(url);
-        return RNFetchBlob.fs.unlink(cacheFile);
+        return _unlinkFile(cacheFile);
     };
 
     /**
      * clear all cache files
      */
-    static clearCache = () => RNFetchBlob.fs.unlink(cacheDir);
+    static clearCache = () => _unlinkFile(cacheDir);
 
     /**
      * Same as ReactNaive.Image.getSize only it will not download the image if it has a cached version
@@ -180,6 +180,14 @@ export default class CachedImage extends Component {
     }
 }
 
+async function _unlinkFile(file) {
+    try {
+        return await RNFetchBlob.fs.unlink(file);
+    }catch (e) {
+
+    }
+}
+
 /**
  * make a cache filename
  * @param url
@@ -212,7 +220,7 @@ async function _saveCacheFile(url: string, success: Function, failure: Function)
 
         if (isNetwork) {
             const tempCacheFile = cacheFile + '.tmp';
-            await RNFetchBlob.fs.unlink(tempCacheFile);
+            _unlinkFile(tempCacheFile);
             RNFetchBlob.config({
                 // response data will be saved to this path if it has access right.
                 path: tempCacheFile,
@@ -229,7 +237,7 @@ async function _saveCacheFile(url: string, success: Function, failure: Function)
                         case 204: /* No content */
                         case 304: /* Not modified */
                         {
-                            await RNFetchBlob.fs.unlink(cacheFile);
+                            _unlinkFile(cacheFile);
                             RNFetchBlob.fs
                                 .mv(tempCacheFile, cacheFile)
                                 .then(() => {
@@ -241,14 +249,14 @@ async function _saveCacheFile(url: string, success: Function, failure: Function)
                             break;
                         }
                         default:
-                            await RNFetchBlob.fs.unlink(tempCacheFile);
+                            _unlinkFile(tempCacheFile);
                             failure && failure("status code:" + status);
                             break;
                     }
 
                 })
                 .catch(async (error) => {
-                    await RNFetchBlob.fs.unlink(tempCacheFile);
+                    _unlinkFile(tempCacheFile);
                     failure && failure(error);
                 });
         } else if (isBase64) {
@@ -259,7 +267,7 @@ async function _saveCacheFile(url: string, success: Function, failure: Function)
                     success && success(cacheFile);
                 })
                 .catch(async (error) => {
-                    await RNFetchBlob.fs.unlink(cacheFile);
+                    _unlinkFile(cacheFile);
                     failure && failure(error);
                 });
         } else {
