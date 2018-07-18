@@ -1,6 +1,6 @@
 {
     "name": "react-native-image-cache-wrapper",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "description": "The best react native image cache wrapper.",
     "main": "index.js",
     "typings": "./index.d.ts",
@@ -31,6 +31,6 @@
         "crypto-js": "^3.1.9-1"
     },
     "peerDependencies": {
-        "react-native-fetch-blob": "^0.10.8"
+        "rn-fetch-blob": "^0.10.12"
     }
 }

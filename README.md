@@ -13,23 +13,27 @@ The best react native image cache wrapper.
 * support cache base64 data to local
 
 ### Installation
-We use [`react-native-fetch-blob`](https://github.com/wkh237/react-native-fetch-blob#installation) to handle file system access in this package,
-So you should install react-native-image-cache-wrapper and react-native-fetch-blob both.
+We use [`rn-fetch-blob`](https://github.com/joltup/rn-fetch-blob) to handle file system access in this package,
+So you should install react-native-image-cache-wrapper and rn-fetch-blob both.
 
 ```bash
 npm install react-native-image-cache-wrapper --save
 
-npm install react-native-fetch-blob --save
-react-native link react-native-fetch-blob
+npm install rn-fetch-blob --save
+react-native link rn-fetch-blob
 ```
 or use yarn
 
 ```
 yarn add react-native-image-cache-wrapper
-yarn add react-native-fetch-blob
+yarn add rn-fetch-blob
 ```
 
 ### ChangeLog
+
+v1.0.1
+
+1. use rn-fetch-blob instead of react-native-fetch-blob
 
 v1.0.0
 
