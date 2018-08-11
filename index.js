@@ -11,7 +11,7 @@ import {
     View,
     Image,
     ImageBackground,
-    Platform,
+    Platform
 } from 'react-native';
 
 import RNFetchBlob from 'rn-fetch-blob';
@@ -144,47 +144,50 @@ export default class CachedImage extends Component {
             this.state.source = this.props.source;
         }
 
-        let children = (this.state.source) ? this.props.children : (
-            <View {...this.props} style={this.props.style ? [this.props.style, {
-                alignItems: 'center',
-                justifyContent: 'center'
-            }] : {alignItems: 'center', justifyContent: 'center'}}>
-                {this.props.activityIndicator}
-            </View>);
+        if (this.state.source) {
 
-        const renderImage = (props, children) => (children ? <ImageBackground {...props}>{children}</ImageBackground> :
-            <Image {...props}/>);
+            const renderImage = (props, children) => (children ?
+                <ImageBackground {...props}>{children}</ImageBackground> :
+                <Image {...props}/>);
 
-        const result = renderImage({
-            ...this.props,
-            source: this.state.source,
-            onError: (error) => {
-                // error happened, delete cache
-                if (this.props.source && this.props.source.uri) {
-                    CachedImage.deleteCache(this.props.source.uri);
-                }
-                if (this.props.onError) {
-                    this.props.onError(error);
-                } else {
-                    if (!this._useDefaultSource && this.props.defaultSource) {
-                        this._useDefaultSource = true;
-                        setTimeout(() => {
-                            this.setState({source: this.props.defaultSource});
-                        }, 0);
+            const result = renderImage({
+                ...this.props,
+                source: this.state.source,
+                onError: (error) => {
+                    // error happened, delete cache
+                    if (this.props.source && this.props.source.uri) {
+                        CachedImage.deleteCache(this.props.source.uri);
+                    }
+                    if (this.props.onError) {
+                        this.props.onError(error);
+                    } else {
+                        if (!this._useDefaultSource && this.props.defaultSource) {
+                            this._useDefaultSource = true;
+                            setTimeout(() => {
+                                this.setState({source: this.props.defaultSource});
+                            }, 0);
+                        }
                     }
                 }
-            }
-        }, children);
+            }, this.props.children);
 
-        return (result);
+            return (result);
+        } else {
+            return (
+                <View {...this.props} style={this.props.style ? [this.props.style, {
+                    alignItems: 'center',
+                    justifyContent: 'center'
+                }] : {alignItems: 'center', justifyContent: 'center'}}>
+                    {this.props.activityIndicator}
+                </View>);
+        }
     }
 }
 
 async function _unlinkFile(file) {
     try {
         return await RNFetchBlob.fs.unlink(file);
-    }catch (e) {
-
+    } catch (e) {
     }
 }
 
@@ -230,33 +233,41 @@ async function _saveCacheFile(url: string, success: Function, failure: Function)
                     url
                 )
                 .then(async (res) => {
-                    let {status} = res.respInfo;
 
-                    switch (status) {
-                        case 200: /* OK */
-                        case 204: /* No content */
-                        case 304: /* Not modified */
-                        {
-                            _unlinkFile(cacheFile);
-                            RNFetchBlob.fs
-                                .mv(tempCacheFile, cacheFile)
-                                .then(() => {
-                                    success && success(cacheFile);
-                                })
-                                .catch(async (error) => {
-                                    failure && failure(error);
-                                });
-                            break;
+                    if (res && res.respInfo && res.respInfo.headers && res.respInfo.headers["Content-Length"]) {
+                        const expectedContentLength = res.respInfo.headers["Content-Length"];
+                        let actualContentLength;
+
+                        try {
+                            const fileStats = await RNFetchBlob.fs.stat(res.path());
+
+                            if (!fileStats || !fileStats.size) {
+                                throw new Error("FileNotFound:"+url);
+                            }
+
+                            actualContentLength = fileStats.size;
+                        } catch (error) {
+                            throw new Error("DownloadFailed:"+url);
                         }
-                        default:
-                            _unlinkFile(tempCacheFile);
-                            failure && failure("status code:" + status);
-                            break;
+
+                        if (expectedContentLength != actualContentLength) {
+                            throw new Error("DownloadFailed:"+url);
+                        }
                     }
 
+                    _unlinkFile(cacheFile);
+                    RNFetchBlob.fs
+                        .mv(tempCacheFile, cacheFile)
+                        .then(() => {
+                            success && success(cacheFile);
+                        })
+                        .catch(async (error) => {
+                            throw error;
+                        });
                 })
                 .catch(async (error) => {
                     _unlinkFile(tempCacheFile);
+                    _unlinkFile(cacheFile);
                     failure && failure(error);
                 });
         } else if (isBase64) {
@@ -271,7 +282,7 @@ async function _saveCacheFile(url: string, success: Function, failure: Function)
                     failure && failure(error);
                 });
         } else {
-            failure && failure("not support url");
+            failure && failure(new Error("NotSupportedUrl"));
         }
     } catch (error) {
         failure && failure(error);
