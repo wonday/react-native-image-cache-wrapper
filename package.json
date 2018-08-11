@@ -1,6 +1,6 @@
 {
     "name": "react-native-image-cache-wrapper",
-    "version": "1.0.2",
+    "version": "1.0.3",
     "description": "The best react native image cache wrapper.",
     "main": "index.js",
     "typings": "./index.d.ts",
