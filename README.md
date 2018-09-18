@@ -31,6 +31,10 @@ yarn add rn-fetch-blob
 
 ### ChangeLog
 
+v1.0.4
+
+1. fix Content-Length check
+
 v1.0.3
 
 1. fix file successfully download check
