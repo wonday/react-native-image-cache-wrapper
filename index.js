@@ -220,12 +220,12 @@ async function _unlinkFile(file) {
 function _getCacheFilename(url) {
   if (!url || url.toString() !== url) return '';
 
-  let ext = url.replace(/.+\./, '').toLowerCase();
+  //   let ext = url.replace(/.+\./, '').toLowerCase();
 
-  ext = ext ? `.${ext}` : '';
+  //   ext = ext ? `.${ext}` : '';
 
   let hash = SHA1(url);
-  return cacheDir + hash + ext;
+  return cacheDir + hash;
 }
 
 /**
