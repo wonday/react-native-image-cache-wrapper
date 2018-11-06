@@ -220,12 +220,21 @@ async function _unlinkFile(file) {
 function _getCacheFilename(url) {
   if (!url || url.toString() !== url) return '';
 
-  //   let ext = url.replace(/.+\./, '').toLowerCase();
+  const ext = getExtFromQuery(url) || url.replace(/.+\./, '');
+  const hash = SHA1(url);
 
-  //   ext = ext ? `.${ext}` : '';
+  return `${cacheDir}${hash}${ext ? `.${ext}`.toLowerCase() : ''}`;
+}
 
-  let hash = SHA1(url);
-  return cacheDir + hash;
+function getExtFromQuery(str) {
+  const matches = str.match(/[\?|&]ext=([^&]*)/);
+  let ext;
+
+  if (matches && matches.length > 0) {
+    ext = matches[1];
+  }
+
+  return ext;
 }
 
 /**
