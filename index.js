@@ -148,7 +148,7 @@ export default class CachedImage extends Component {
 
         if (this.state.source) {
 
-            const renderImage = (props, children) => (children ?
+            const renderImage = (props, children) => (children != null ?
                 <ImageBackground {...props}>{children}</ImageBackground> :
                 <Image {...props}/>);
 
