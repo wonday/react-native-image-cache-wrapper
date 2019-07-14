@@ -31,6 +31,10 @@ yarn add rn-fetch-blob
 
 ### ChangeLog
 
+v1.0.5
+
+1. fix for RN 0.59+
+
 v1.0.4
 
 1. fix Content-Length check
