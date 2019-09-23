@@ -19,15 +19,15 @@ import RNFetchBlob from 'rn-fetch-blob';
 const SHA1 = require('crypto-js/sha1');
 
 const defaultImageTypes = ['png', 'jpeg', 'jpg', 'gif', 'bmp', 'tiff', 'tif'];
-const cacheDir = RNFetchBlob.fs.dirs.CacheDir + "/CachedImage/";
 
 export default class CachedImage extends Component {
 
     static defaultProps = {
         expiration: 86400 * 7, // default cache a week
         activityIndicator: null, // default not show an activity indicator
-        cacheDir: cacheDir, // default cacheDir
     };
+
+    static cacheDir = RNFetchBlob.fs.dirs.CacheDir + "/CachedImage/";
 
     /**
      * delete a cache file
@@ -41,7 +41,7 @@ export default class CachedImage extends Component {
     /**
      * clear all cache files
      */
-    static clearCache = () => _unlinkFile(this.props.cacheDir);
+    static clearCache = () => _unlinkFile(CachedImage.cacheDir);
 
     /**
      * check if a url is cached
@@ -214,7 +214,7 @@ function _getCacheFilename(url) {
     let ext = url.replace(/.+\./, "").toLowerCase();
     if (defaultImageTypes.indexOf(ext) === -1) ext = "png";
     let hash = SHA1(url);
-    return this.props.cacheDir + hash + "." + ext;
+    return CachedImage.cacheDir + hash + "." + ext;
 }
 
 /**
