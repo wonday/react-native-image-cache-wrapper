@@ -28,13 +28,19 @@ or use yarn
 yarn add react-native-image-cache-wrapper
 yarn add rn-fetch-blob
 ```
+*Notice: if you use RN 0.60+, please use v0.10.16*
+
 
 ### ChangeLog
 
-v1.0.5
+v1.0.6
 
 1. add ```cacheDir``` property, user can change cache dir
 2. add static method ```CachedImage.isUrlCached(url)```
+
+v1.0.5
+
+1. fix for RN 0.59
 
 v1.0.4
 
@@ -52,6 +58,7 @@ v1.0.0
 
 1. initial release
 
+[[more]](https://github.com/wonday/react-native-image-cache-wrapper/releases)
 
 
 ### Configuration
@@ -61,7 +68,7 @@ v1.0.0
 | ```<Image/>``` or ```<ImageBackground>``` properties        |         |     | same with ```<Image/>``` and ```<ImageBackground/>``` | 1.0 |
 | expiration    | number        | 604800           | expiration seconds (0:no expiration, default cache a week) | 1.0 |
 | activityIndicator | Component | null | when loading show it as an indicator, you can use your component| 1.0 |
-| cacheDir | String | RNFetchBlob.fs.dirs.CacheDir + "/CachedImage/" | cache file will be saved to this dir| 1.0.5 |
+| cacheDir | String | RNFetchBlob.fs.dirs.CacheDir + "/CachedImage/" | cache file will be saved to this dir| 1.0.6 |
 
 
 ### Usage
