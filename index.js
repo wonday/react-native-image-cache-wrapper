@@ -46,7 +46,7 @@ export default class CachedImage extends Component {
     /**
      * check if a url is cached
      */
-    async static isUrlCached = (url) => {
+    static async isUrlCached = (url) => {
         const cacheFile = _getCacheFilename(url);
         return !!(await RNFetchBlob.fs.stat(cacheFile));
     };
