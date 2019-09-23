@@ -26,6 +26,7 @@ export default class CachedImage extends Component {
     static defaultProps = {
         expiration: 86400 * 7, // default cache a week
         activityIndicator: null, // default not show an activity indicator
+        cacheDir: cacheDir, // default cacheDir
     };
 
     /**
@@ -40,7 +41,15 @@ export default class CachedImage extends Component {
     /**
      * clear all cache files
      */
-    static clearCache = () => _unlinkFile(cacheDir);
+    static clearCache = () => _unlinkFile(this.props.cacheDir);
+
+    /**
+     * check if a url is cached
+     */
+    async static isUrlCached = (url) => {
+        const cacheFile = _getCacheFilename(url);
+        return !!(await RNFetchBlob.fs.stat(cacheFile));
+    };
 
     /**
      * Same as ReactNaive.Image.getSize only it will not download the image if it has a cached version
@@ -205,7 +214,7 @@ function _getCacheFilename(url) {
     let ext = url.replace(/.+\./, "").toLowerCase();
     if (defaultImageTypes.indexOf(ext) === -1) ext = "png";
     let hash = SHA1(url);
-    return cacheDir + hash + "." + ext;
+    return this.props.cacheDir + hash + "." + ext;
 }
 
 /**
