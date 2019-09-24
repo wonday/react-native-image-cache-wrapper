@@ -46,10 +46,25 @@ export default class CachedImage extends Component {
     /**
      * check if a url is cached
      */
-    static isUrlCached = async (url) => {
+    static isUrlCached = (url: string, success: Function, failure: Function) => {
         const cacheFile = _getCacheFilename(url);
-        return !!(await RNFetchBlob.fs.stat(cacheFile));
+        RNFetchBlob.fs.exists(cacheFile)
+            .then((exists) => {
+                success && success(exists);
+            })
+            .catch((error) => {
+                failure && failure(error);
+            });
     };
+
+    /**
+     * make a cache filename
+     * @param url
+     * @returns {string}
+     */
+    static getCacheFilename = (url) => {
+        return _getCacheFilename(url);
+    }
 
     /**
      * Same as ReactNaive.Image.getSize only it will not download the image if it has a cached version

@@ -147,7 +147,7 @@ import CachedImage from 'react-native-image-cache-wrapper';
 CachedImage.clearCache();
 ```
 
-**CachedImage.isUrlCached(url)**
+**CachedImage.isUrlCached(url,success=(cachFile)=>void,fail=(error)=>void))**
 
 check if a url is cached.
 
@@ -156,11 +156,22 @@ Example:
 import CachedImage from 'react-native-image-cache-wrapper';
 
 // check if a url is cached.
-if (CachedImage.isUrlCached(url)) {
-    // do something
-};
+CachedImage.isUrlCached(url,(exists)=>{
+    alert(exists);
+});
 ```
 
+**CachedImage.getCacheFilename(url)**
+
+make a cache filename.
+
+Example:
+```
+import CachedImage from 'react-native-image-cache-wrapper';
+
+// check if a url is cached.
+let cachedFilename = CachedImage.getCacheFilename(url);
+```
 
 **CachedImage.cacheDir**
 
