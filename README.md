@@ -28,15 +28,16 @@ or use yarn
 yarn add react-native-image-cache-wrapper
 yarn add rn-fetch-blob
 ```
-*Notice: if you use RN 0.60+, please use v0.10.16*
+*Notice: if you use RN 0.60+, please use rn-fetch-blob v0.10.16*
 
 
 ### ChangeLog
 
 v1.0.6
 
-1. add static method ```CachedImage.isUrlCached(url)```
-2. add static property ```CachedImage.cacheDir```, user can use to set customized cacheDir
+1. add static method ```CachedImage.isUrlCached(url,success=(cachFile)=>void,fail=(error)=>void))```
+2. add static method ```CachedImage.getCacheFilename(url)```
+3. add static property ```CachedImage.cacheDir```, user can use to set customized cacheDir
 
 v1.0.5
 
