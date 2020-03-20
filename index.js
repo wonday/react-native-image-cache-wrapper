@@ -259,9 +259,8 @@ async function _saveCacheFile(url: string, success: Function, failure: Function)
                     url
                 )
                 .then(async (res) => {
-
-                    if (res && res.respInfo && res.respInfo.headers && !res.respInfo.headers["Content-Encoding"] && !res.respInfo.headers["Transfer-Encoding"] && res.respInfo.headers["Content-Length"]) {
-                        const expectedContentLength = res.respInfo.headers["Content-Length"];
+                    const expectedContentLength = res.respInfo.headers["Content-Length"]||res.respInfo.headers["content-length"];
+                    if (res && res.respInfo && res.respInfo.headers && !res.respInfo.headers["Content-Encoding"] && !res.respInfo.headers["Transfer-Encoding"] && expectedContentLength) {
                         let actualContentLength;
 
                         try {
