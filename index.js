@@ -74,18 +74,31 @@ export default class CachedImage extends Component {
      */
     static getSize = (url: string, success: Function, failure: Function) => {
 
-        CachedImage.prefetch(url, 0,
-            (cacheFile) => {
+        CachedImage.isUrlCached(url, exists => {
+            if (!exists) {
+                CachedImage.prefetch(url, 0,
+                    (cacheFile) => {
+                        if (Platform.OS === 'android') {
+                            url = "file://" + cacheFile;
+                        } else {
+                            url = cacheFile;
+                        }
+                        Image.getSize(url, success, failure);
+                    },
+                    (error) => {
+                        Image.getSize(url, success, failure);
+                    }
+                );
+            } else {
+                let cachedFilename = CachedImage.getCacheFilename(url);
                 if (Platform.OS === 'android') {
-                    url = "file://" + cacheFile;
+                    url = "file://" + cachedFilename;
                 } else {
-                    url = cacheFile;
+                    url = cachedFilename;
                 }
                 Image.getSize(url, success, failure);
-            },
-            (error) => {
-                Image.getSize(url, success, failure);
-            });
+            }
+        })
 
     };
 
