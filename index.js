@@ -25,10 +25,13 @@ export default class CachedImage extends Component {
     static defaultProps = {
         expiration: 86400 * 7, // default cache a week
         activityIndicator: null, // default not show an activity indicator
+        defaultSource: require('static/images/default.png')
+
     };
 
     static cacheDir = RNFetchBlob.fs.dirs.CacheDir + "/CachedImage/";
 
+    static sameURL = []
     /**
      * delete a cache file
      * @param url
@@ -106,6 +109,12 @@ export default class CachedImage extends Component {
         }
 
         const cacheFile = _getCacheFilename(url);
+        if(CachedImage.sameURL.includes(cacheFile)){
+
+            success && success(cacheFile);
+            return
+        }
+        CachedImage.sameURL.push(cacheFile)
 
         RNFetchBlob.fs.stat(cacheFile)
             .then((stats) => {
@@ -118,6 +127,8 @@ export default class CachedImage extends Component {
             })
             .catch((error) => {
                 // not exist
+                // success && success(cacheFile)
+                
                 _saveCacheFile(url, success, failure);
             });
     };
@@ -160,7 +171,7 @@ export default class CachedImage extends Component {
                         // cache failed use original source
                         if (this._mounted) {
                             setTimeout(() => {
-                                this.setState({source: this.props.source});
+                                this.setState({source: { uri: this.props.source}});
                         }, 0);
                         }
                         this._downloading = false;
@@ -190,6 +201,10 @@ export default class CachedImage extends Component {
                         if (!this._useDefaultSource && this.props.defaultSource) {
                             this._useDefaultSource = true;
                             setTimeout(() => {
+                                if(this.props.source && this.props.source.uri ){
+                                    this.setState({source: this.props.source});
+                                }
+                                else 
                                 this.setState({source: this.props.defaultSource});
                             }, 0);
                         }
