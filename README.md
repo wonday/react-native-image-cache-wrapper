@@ -33,6 +33,10 @@ yarn add rn-fetch-blob
 
 ### ChangeLog
 
+v1.0.7
+
+1. fix Strange error
+
 v1.0.6
 
 1. add static method ```CachedImage.isUrlCached(url,success=(cachFile)=>void,fail=(error)=>void))```
