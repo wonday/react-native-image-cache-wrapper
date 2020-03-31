@@ -25,8 +25,6 @@ export default class CachedImage extends Component {
     static defaultProps = {
         expiration: 86400 * 7, // default cache a week
         activityIndicator: null, // default not show an activity indicator
-        defaultSource: require('static/images/default.png')
-
     };
 
     static cacheDir = RNFetchBlob.fs.dirs.CacheDir + "/CachedImage/";
