@@ -1,4 +1,4 @@
-# react-native-image-cache-wrapper
+# react-native-image-cache-wrapper - Strange error fixed version - Алдаа зассан хувилбар
 [![npm](https://img.shields.io/npm/v/react-native-image-cache-wrapper.svg?style=flat-square)](https://www.npmjs.com/package/react-native-image-cache-wrapper)
 
 The best react native image cache wrapper.
@@ -32,6 +32,10 @@ yarn add rn-fetch-blob
 
 
 ### ChangeLog
+
+v1.0.7
+
+1. fix Strange error
 
 v1.0.6
 
