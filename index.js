@@ -176,7 +176,7 @@ export default class CachedImage extends Component {
                         // cache failed use original source
                         if (this._mounted) {
                             setTimeout(() => {
-                                this.setState({source: { uri: this.props.source}});
+                                this.setState({source: { uri: this.props.source.uri}});
                         }, 0);
                         }
                         this._downloading = false;
