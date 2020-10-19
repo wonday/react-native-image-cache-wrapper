@@ -6,13 +6,14 @@
  * LICENSE file in the root directory of this source tree.
  */
 'use strict';
-import React, {Component} from 'react';
+
 import {
-    View,
     Image,
     ImageBackground,
-    Platform
+    Platform,
+    View
 } from 'react-native';
+import React, {Component} from 'react';
 
 import RNFetchBlob from 'rn-fetch-blob';
 
@@ -160,6 +161,12 @@ export default class CachedImage extends Component {
         this._mounted = true;
     }
 
+    componentWillReceiveProps(nextProps) {
+        const { source } = nextProps;
+
+        if (source !== this.props.source) { this.setState({...this.props, source: source}) }
+    }
+
     componentWillUnmount() {
         this._mounted = false;
     }
@@ -182,7 +189,7 @@ export default class CachedImage extends Component {
                         // cache failed use original source
                         if (this._mounted) {
                             setTimeout(() => {
-                                this.setState({source: { uri: this.props.source}});
+                                this.setState({source: { uri: this.props.source.uri}});
                         }, 0);
                         }
                         this._downloading = false;
