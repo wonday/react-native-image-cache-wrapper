@@ -73,6 +73,7 @@ v1.0.0
 | ```<Image/>``` or ```<ImageBackground>``` properties        |         |     | same with ```<Image/>``` and ```<ImageBackground/>``` | 1.0 |
 | expiration    | number        | 604800           | expiration seconds (0:no expiration, default cache a week) | 1.0 |
 | activityIndicator | Component | null | when loading show it as an indicator, you can use your component| 1.0 |
+| retry | Object | {count: 3, interval: 100} | when multiple parallel requests are made for the same uri only the first remote fetch is made, the remaining requests will read from cache. If the remote request has not completed then cache checks for subsequent requests will occur using this retry config. Count is the number of times to try. Interval is the time to wait between each retry. If the first (original) remote request fails then all requests will fail (your app may retry, e.g., provide user interction for refresh) | 1.0.8 |
 
 ### Usage
 
@@ -95,7 +96,7 @@ render()
 
 ### Static Function
 
-**CachedImage.getSize(url, success=(width,height)=>void,fail=(error)=>void)**
+**CachedImage.getSize(url, success=(width,height)=>void,fail=(error)=>void,retry={retryConfig})**
 
 Get the image size, if no cache, will cache it.
 
@@ -111,7 +112,7 @@ CachedImage.getSize("https://assets-cdn.github.com/images/modules/logos_page/Oct
     });
 ```
 
-**CachedImage.prefetch(url,expiration=0,success=(cachFile)=>void,fail=(error)=>void)**
+**CachedImage.prefetch(url,expiration=0,success=(cachFile)=>void,fail=(error)=>void,retry={retryConfig})**
 
 prefetch an image and cache it.
 
