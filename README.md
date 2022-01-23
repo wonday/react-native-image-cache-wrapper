@@ -1,4 +1,4 @@
-# react-native-image-cache-wrapper - Strange error fixed version - Алдаа зассан хувилбар
+# react-native-image-cache-wrapper
 [![npm](https://img.shields.io/npm/v/react-native-image-cache-wrapper.svg?style=flat-square)](https://www.npmjs.com/package/react-native-image-cache-wrapper)
 
 The best react native image cache wrapper.
